@@ -10,4 +10,6 @@ public interface BikeRepository {
 
     void updateStock(String bikeId, long noOfUnits);
 
+    List<Bike> getBikesByCategory(String category);
+
 }

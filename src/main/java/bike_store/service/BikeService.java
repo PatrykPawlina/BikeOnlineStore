@@ -8,4 +8,6 @@ public interface BikeService {
     void updateAllStock();
 
     List<Bike> getAllBikes();
+
+    List<Bike> getBikesByCategory(String category);
 }

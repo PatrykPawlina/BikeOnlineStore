@@ -26,4 +26,9 @@ public class BikeServiceImpl implements BikeService {
     public List<Bike> getAllBikes() {
         return bikeRepository.getAllBikes();
     }
+
+    @Override
+    public List<Bike> getBikesByCategory(String category) {
+        return bikeRepository.getBikesByCategory(category);
+    }
 }
