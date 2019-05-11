@@ -43,6 +43,20 @@ public class InMemoryBikeRepository implements BikeRepository {
         return jdbcTemplate.query(SQL, params, new BikeMapper());
     }
 
+    @Override
+    public List<Bike> getBikesByFilter(Map<String, List<String>> filterParams) {
+        String SQL = "SELECT * FROM BIKES WHERE CATEGORY IN( :categories) AND MANUFACTURER IN( :brands)";
+        return jdbcTemplate.query(SQL, filterParams, new BikeMapper());
+    }
+
+    @Override
+    public Bike getBikeById(String bikeID) {
+        String SQL = "SELECT * FROM BIKES WHERE ID = :id";
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", bikeID);
+        return jdbcTemplate.queryForObject(SQL, params, new BikeMapper());
+    }
+
     private static final class BikeMapper implements RowMapper<Bike> {
 
         public Bike mapRow(ResultSet resultSet, int i) throws SQLException {

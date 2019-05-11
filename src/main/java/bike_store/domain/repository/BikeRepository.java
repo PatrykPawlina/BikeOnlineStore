@@ -3,6 +3,7 @@ package bike_store.domain.repository;
 import bike_store.domain.Bike;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BikeRepository {
 
@@ -12,4 +13,7 @@ public interface BikeRepository {
 
     List<Bike> getBikesByCategory(String category);
 
+    List<Bike> getBikesByFilter(Map<String, List<String>> filterParams);
+
+    Bike getBikeById(String bikeID);
 }

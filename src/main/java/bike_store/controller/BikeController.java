@@ -4,8 +4,13 @@ import bike_store.service.BikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("market")
@@ -31,5 +36,18 @@ public class BikeController {
     public String getBikesByCategory(Model model, @PathVariable("category") String bikeCategory) {
         model.addAttribute("bikes", bikeService.getBikesByCategory(bikeCategory));
         return "bikes";
+    }
+
+    @RequestMapping("/bikes/filter/{params}")
+    public String getBikesByFilter(@MatrixVariable(pathVar = "params")
+                                           Map<String, List<String>> filterParams, Model model) {
+        model.addAttribute("bikes", bikeService.getBikesByFilter(filterParams));
+        return "bikes";
+    }
+
+    @RequestMapping("/bike")
+    public String getBikeById(@RequestParam("id") String bikeId, Model model) {
+        model.addAttribute("bike", bikeService.getBikeById(bikeId));
+        return "bike";
     }
 }

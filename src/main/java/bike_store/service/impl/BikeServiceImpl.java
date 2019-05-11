@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BikeServiceImpl implements BikeService {
@@ -30,5 +31,15 @@ public class BikeServiceImpl implements BikeService {
     @Override
     public List<Bike> getBikesByCategory(String category) {
         return bikeRepository.getBikesByCategory(category);
+    }
+
+    @Override
+    public List<Bike> getBikesByFilter(Map<String, List<String>> filterParams) {
+        return bikeRepository.getBikesByFilter(filterParams);
+    }
+
+    @Override
+    public Bike getBikeById(String bikeID) {
+        return bikeRepository.getBikeById(bikeID);
     }
 }
