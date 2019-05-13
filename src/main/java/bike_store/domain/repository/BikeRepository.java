@@ -15,5 +15,7 @@ public interface BikeRepository {
 
     List<Bike> getBikesByFilter(Map<String, List<String>> filterParams);
 
-    Bike getBikeById(String bikeID);
+    Bike getBikeById(String bikeId);
+
+    void addBike(Bike bike);
 }

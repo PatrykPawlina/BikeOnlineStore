@@ -57,6 +57,34 @@ public class InMemoryBikeRepository implements BikeRepository {
         return jdbcTemplate.queryForObject(SQL, params, new BikeMapper());
     }
 
+    @Override
+    public void addBike(Bike bike) {
+        String SQL = "INSERT INTO BIKES (ID, "
+                + "NAME, "
+                + "DESCRIPTION, "
+                + "UNIT_PRICE, "
+                + "MANUFACTURER, "
+                + "CATEGORY, "
+                + "CONDITION, "
+                + "UNITS_IN_STOCK,"
+                + "UNITS_IN_ORDER, "
+                + "DISCONTINUED) "
+                + "VALUES (:id, :name, :description, :price, :manufacturer, :category, " +
+                ":condition, :inStock, :inOrder, :discontinued)";
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", bike.getBikeId());
+        params.put("name", bike.getName());
+        params.put("description", bike.getDescription());
+        params.put("price", bike.getUnitPrice());
+        params.put("manufacturer", bike.getManufacturer());
+        params.put("category", bike.getCategory());
+        params.put("condition", bike.getCondition());
+        params.put("inStock", bike.getUnitsInStock());
+        params.put("inOrder", bike.getUnitsInOrder());
+        params.put("discontinued", bike.isDiscontinued());
+        jdbcTemplate.update(SQL, params);
+    }
+
     private static final class BikeMapper implements RowMapper<Bike> {
 
         public Bike mapRow(ResultSet resultSet, int i) throws SQLException {

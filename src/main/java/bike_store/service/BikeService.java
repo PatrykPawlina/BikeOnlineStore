@@ -15,4 +15,6 @@ public interface BikeService {
     List<Bike> getBikesByFilter(Map<String, List<String>> filterParams);
 
     Bike getBikeById(String bikeID);
+
+    void addBike(Bike bike);
 }

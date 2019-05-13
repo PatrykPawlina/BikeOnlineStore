@@ -1,13 +1,11 @@
 package bike_store.controller;
 
+import bike_store.domain.Bike;
 import bike_store.service.BikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.MatrixVariable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -49,5 +47,19 @@ public class BikeController {
     public String getBikeById(@RequestParam("id") String bikeId, Model model) {
         model.addAttribute("bike", bikeService.getBikeById(bikeId));
         return "bike";
+    }
+
+    @RequestMapping(value = "/bikes/add", method = RequestMethod.GET)
+    public String getAddNewBikeForm(Model model) {
+        Bike newBike = new Bike();
+        model.addAttribute("newBike", newBike);
+        return "addBike";
+    }
+
+    @RequestMapping(value = "/bikes/add", method = RequestMethod.POST)
+    public String processAddNewBikeForm(@ModelAttribute("newBike") Bike newBike) {
+        bikeService.addBike(newBike);
+        return "redirect:/market/bikes";
+
     }
 }

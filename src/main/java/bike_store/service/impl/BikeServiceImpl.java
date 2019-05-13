@@ -42,4 +42,10 @@ public class BikeServiceImpl implements BikeService {
     public Bike getBikeById(String bikeID) {
         return bikeRepository.getBikeById(bikeID);
     }
+
+    @Override
+    public void addBike(Bike bike) {
+        bikeRepository.addBike(bike);
+    }
 }
+
