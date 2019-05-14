@@ -6,6 +6,9 @@ import bike_store.service.BikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,10 +61,14 @@ public class BikeController {
     }
 
     @RequestMapping(value = "/bikes/add", method = RequestMethod.POST)
-    public String processAddNewBikeForm(@ModelAttribute("newBike") Bike newBike) {
+    public String processAddNewBikeForm(@ModelAttribute("newBike") Bike newBike, BindingResult result) {
+        String[] suppressedFields = result.getSuppressedFields();
+        if (suppressedFields.length > 0) {
+            throw new RuntimeException("Attempting to bind disallowed fields: "
+                    + StringUtils.arrayToCommaDelimitedString(suppressedFields));
+        }
         bikeService.addBike(newBike);
         return "redirect:/market/bikes";
-
     }
 
     @RequestMapping(value = "/customers/add", method = RequestMethod.GET)
@@ -69,6 +76,18 @@ public class BikeController {
         Customer newCustomer = new Customer();
         model.addAttribute("newCustomer", newCustomer);
         return "addCustomer";
+    }
 
+    @InitBinder
+    public void initialiseBinder(WebDataBinder binder) {
+        binder.setAllowedFields(
+                "bikeId",
+                "name",
+                "unitPrice",
+                "description",
+                "manufacturer",
+                "category",
+                "unitsInStock",
+                "condition");
     }
 }
