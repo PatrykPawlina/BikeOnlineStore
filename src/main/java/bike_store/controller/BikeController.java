@@ -1,6 +1,7 @@
 package bike_store.controller;
 
 import bike_store.domain.Bike;
+import bike_store.domain.repository.Customer;
 import bike_store.service.BikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,6 +61,14 @@ public class BikeController {
     public String processAddNewBikeForm(@ModelAttribute("newBike") Bike newBike) {
         bikeService.addBike(newBike);
         return "redirect:/market/bikes";
+
+    }
+
+    @RequestMapping(value = "/customers/add", method = RequestMethod.GET)
+    public String getAddNewCustomerForm(Model model) {
+        Customer newCustomer = new Customer();
+        model.addAttribute("newCustomer", newCustomer);
+        return "addCustomer";
 
     }
 }

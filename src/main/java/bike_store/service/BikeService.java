@@ -1,6 +1,7 @@
 package bike_store.service;
 
 import bike_store.domain.Bike;
+import bike_store.domain.repository.Customer;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,6 @@ public interface BikeService {
     Bike getBikeById(String bikeID);
 
     void addBike(Bike bike);
+
+    void addCustomer(Customer customer);
 }

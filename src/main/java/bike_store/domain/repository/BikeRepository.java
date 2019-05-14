@@ -18,4 +18,6 @@ public interface BikeRepository {
     Bike getBikeById(String bikeId);
 
     void addBike(Bike bike);
+
+    void addCustomer(Customer customer);
 }
