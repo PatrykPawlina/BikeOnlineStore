@@ -1,4 +1,4 @@
-package bike_store.domain.repository;
+package bike_store.domain;
 
 public enum CustomerGender {
     MALE,

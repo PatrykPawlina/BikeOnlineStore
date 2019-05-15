@@ -1,6 +1,7 @@
 package bike_store.domain.repository;
 
 import bike_store.domain.Bike;
+import bike_store.domain.Customer;
 
 import java.util.List;
 import java.util.Map;

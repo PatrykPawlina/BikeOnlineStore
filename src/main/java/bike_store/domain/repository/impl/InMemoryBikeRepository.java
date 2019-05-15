@@ -1,8 +1,8 @@
 package bike_store.domain.repository.impl;
 
 import bike_store.domain.Bike;
+import bike_store.domain.Customer;
 import bike_store.domain.repository.BikeRepository;
-import bike_store.domain.repository.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

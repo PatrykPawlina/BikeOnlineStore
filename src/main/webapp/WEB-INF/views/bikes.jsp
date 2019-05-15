@@ -21,6 +21,8 @@
         <c:forEach items="${bikes}" var="bike">
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
+                    <img src="<c:url value="/img/${bike.bikeId}.jpg">
+                    </c:url>" alt="image" style="width: 100%"/>
                     <div class="caption">
                         <h3>${bike.name}</h3>
                         <p>${bike.description}</p>

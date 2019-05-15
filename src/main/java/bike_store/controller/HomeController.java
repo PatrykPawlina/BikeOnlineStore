@@ -13,4 +13,9 @@ public class HomeController {
         model.addAttribute("tagline", "Best place where you buy a amaizing bike:)");
         return "welcome";
     }
+
+    @RequestMapping("welcome/greeting")
+    public String greeting() {
+        return "welcome";
+    }
 }

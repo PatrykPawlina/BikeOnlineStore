@@ -1,7 +1,7 @@
 package bike_store.service;
 
 import bike_store.domain.Bike;
-import bike_store.domain.repository.Customer;
+import bike_store.domain.Customer;
 
 import java.util.List;
 import java.util.Map;

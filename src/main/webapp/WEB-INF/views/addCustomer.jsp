@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
@@ -20,25 +21,29 @@
         <fieldset>
             <legend>Add new Customer</legend>
             <div class="form-group">
-                <label class="control-label col-lg-2 col-lg-2" for="firstName">First Name</label>
+                <label class="control-label col-lg-2 col-lg-2" for="firstName">
+                    <spring:message code="addCustomer.form.firstName.label"/> </label>
                 <div class="col-lg-10">
                     <form:input id="firstName" path="firstName" type="text" class="form:input-large"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2 col-lg-2" for="lastName">Last Name</label>
+                <label class="control-label col-lg-2 col-lg-2" for="lastName">
+                    <spring:message code="addCustomer.form.lastNme.label"/> </label>
                 <div class="col-lg-10">
                     <form:input id="lastName" path="lastName" type="text" class="form:input-large"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2 col-lg-2" for="emailAddress">E-mail address</label>
+                <label class="control-label col-lg-2 col-lg-2" for="emailAddress">
+                    <spring:message code="addCustomer.form.emailAddress.label"/> </label>
                 <div class="col-lg-10">
                     <form:input id="emailAddress" path="emailAddress" type="text" class="form:input-large"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-2" id="customerGender">Gender</label>
+                <label class="control-label col-lg-2" id="customerGender">
+                    <spring:message code="addCustomer.form.customerGender.label"/> </label>
                 <div class="col-lg-10">
                     <form:radiobutton path="customerGender" value="Male"/>Male
                     <form:radiobutton path="customerGender" value="Female"/>Female
