@@ -10,7 +10,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -61,11 +64,20 @@ public class BikeController {
     }
 
     @RequestMapping(value = "/bikes/add", method = RequestMethod.POST)
-    public String processAddNewBikeForm(@ModelAttribute("newBike") Bike newBike, BindingResult result) {
+    public String processAddNewBikeForm(@ModelAttribute("newBike") Bike newBike, BindingResult result, HttpServletRequest request) {
         String[] suppressedFields = result.getSuppressedFields();
         if (suppressedFields.length > 0) {
             throw new RuntimeException("Attempting to bind disallowed fields: "
                     + StringUtils.arrayToCommaDelimitedString(suppressedFields));
+        }
+        MultipartFile bikeImage = newBike.getBikeImage();
+        String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+        if (bikeImage != null && !bikeImage.isEmpty()) {
+            try {
+                bikeImage.transferTo(new File(rootDirectory + "resources\\images" + newBike.getBikeId() + ".jpg"));
+            } catch (Exception e) {
+                throw new RuntimeException("Bike Image Saving Failed", e);
+            }
         }
         bikeService.addBike(newBike);
         return "redirect:/market/bikes";
@@ -88,6 +100,7 @@ public class BikeController {
                 "manufacturer",
                 "category",
                 "unitsInStock",
-                "condition");
+                "condition",
+                "bikeImage");
     }
 }

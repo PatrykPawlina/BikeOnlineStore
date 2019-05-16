@@ -17,7 +17,7 @@
     </div>
 </section>
 <section class="container">
-    <form:form method="POST" modelAttribute="newBike" class="form-horizontal">
+    <form:form method="POST" modelAttribute="newBike" class="form-horizontal" enctype="multipart/form-data">
         <fieldset>
             <legend>Add new Bike</legend>
             <div class="form-group">
@@ -70,7 +70,6 @@
                     <form:input id="description" path="description" rows="2"/>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="control-label col-lg-2" id="condition">
                     <spring:message code="addBike.form.condition.label"/> </label>
@@ -78,6 +77,14 @@
                     <form:radiobutton path="condition" value="New"/>New
                     <form:radiobutton path="condition" value="Old"/>Old
                     <form:radiobutton path="condition" value="Refurbished"/>Refurbished
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="bikeImage">
+                    <spring:message code="addBike.form.bikeImage.label"/>
+                </label>
+                <div class="col-lg-10">
+                    <form:input id="bikeImage" path="bikeImage" type="file" class="form:input-large"/>
                 </div>
             </div>
             <div class="form-group">

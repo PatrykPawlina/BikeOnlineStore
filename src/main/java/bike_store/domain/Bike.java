@@ -1,5 +1,7 @@
 package bike_store.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -17,6 +19,7 @@ public class Bike implements Serializable {
     private long unitsInOrder;
     private boolean discontinued;
     private String condition;
+    private MultipartFile bikeImage;
 
     public Bike() {
         super();
@@ -26,6 +29,10 @@ public class Bike implements Serializable {
         this.bikeId = bikeId;
         this.name = name;
         this.unitPrice = unitPrice;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getBikeId() {
@@ -106,6 +113,14 @@ public class Bike implements Serializable {
 
     public void setCondition(String condition) {
         this.condition = condition;
+    }
+
+    public MultipartFile getBikeImage() {
+        return bikeImage;
+    }
+
+    public void setBikeImage(MultipartFile bikeImage) {
+        this.bikeImage = bikeImage;
     }
 
     @Override
