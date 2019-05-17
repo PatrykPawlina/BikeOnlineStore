@@ -2,6 +2,8 @@ package bike_store.controller;
 
 import bike_store.domain.Bike;
 import bike_store.domain.Customer;
+import bike_store.exception.BikeNotFoundException;
+import bike_store.exception.NoBikesFoundUnderCategoryException;
 import bike_store.service.BikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -38,8 +41,12 @@ public class BikeController {
     }
 
     @RequestMapping("/bikes/{category}")
-    public String getBikesByCategory(Model model, @PathVariable("category") String bikeCategory) {
-        model.addAttribute("bikes", bikeService.getBikesByCategory(bikeCategory));
+    public String getBikesByCategory(Model model, @PathVariable("category") String category) {
+        List<Bike> bikes = bikeService.getBikesByCategory(category);
+        if (bikes == null || bikes.isEmpty()) {
+            throw new NoBikesFoundUnderCategoryException();
+        }
+        model.addAttribute("bikes", bikes);
         return "bikes";
     }
 
@@ -102,5 +109,15 @@ public class BikeController {
                 "unitsInStock",
                 "condition",
                 "bikeImage");
+    }
+
+    @ExceptionHandler(BikeNotFoundException.class)
+    public ModelAndView handleError(HttpServletRequest request, BikeNotFoundException exception) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("invalidBikeId", exception.getBikeId());
+        modelAndView.addObject("exception", exception);
+        modelAndView.addObject("url", request.getRequestURL() + "?" + request.getQueryString());
+        modelAndView.setViewName("bikeNotFound");
+        return modelAndView;
     }
 }

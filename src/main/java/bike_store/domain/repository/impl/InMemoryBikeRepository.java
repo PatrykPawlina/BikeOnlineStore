@@ -3,7 +3,9 @@ package bike_store.domain.repository.impl;
 import bike_store.domain.Bike;
 import bike_store.domain.Customer;
 import bike_store.domain.repository.BikeRepository;
+import bike_store.exception.BikeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -55,7 +57,11 @@ public class InMemoryBikeRepository implements BikeRepository {
         String SQL = "SELECT * FROM BIKES WHERE ID = :id";
         Map<String, Object> params = new HashMap<>();
         params.put("id", bikeID);
-        return jdbcTemplate.queryForObject(SQL, params, new BikeMapper());
+        try {
+            return jdbcTemplate.queryForObject(SQL, params, new BikeMapper());
+        } catch (DataAccessException e) {
+            throw new BikeNotFoundException(bikeID);
+        }
     }
 
     @Override

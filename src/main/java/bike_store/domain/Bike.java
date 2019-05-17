@@ -1,10 +1,13 @@
 package bike_store.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@XmlTransient
 public class Bike implements Serializable {
 
     private static final long serialVersionUID = 3678107792576131001L;
@@ -19,6 +22,7 @@ public class Bike implements Serializable {
     private long unitsInOrder;
     private boolean discontinued;
     private String condition;
+    @JsonIgnore
     private MultipartFile bikeImage;
 
     public Bike() {
@@ -115,6 +119,7 @@ public class Bike implements Serializable {
         this.condition = condition;
     }
 
+    @XmlTransient
     public MultipartFile getBikeImage() {
         return bikeImage;
     }
