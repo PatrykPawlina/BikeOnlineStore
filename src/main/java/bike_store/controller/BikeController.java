@@ -108,7 +108,8 @@ public class BikeController {
                 "category",
                 "unitsInStock",
                 "condition",
-                "bikeImage");
+                "bikeImage",
+                "language");
     }
 
     @ExceptionHandler(BikeNotFoundException.class)
