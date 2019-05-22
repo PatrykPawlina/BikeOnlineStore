@@ -63,6 +63,11 @@ public class BikeController {
         return "bike";
     }
 
+    @RequestMapping("/bikes/invalidPromoCode")
+    public String invalidPromoCode() {
+        return "invalidPromoCode";
+    }
+
     @RequestMapping(value = "/bikes/add", method = RequestMethod.GET)
     public String getAddNewBikeForm(Model model) {
         Bike newBike = new Bike();

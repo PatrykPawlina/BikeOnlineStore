@@ -9,6 +9,11 @@
 </head>
 <body>
 <section>
+    <div class="pull-right" style="padding-right: 50px">
+        <a href="?language=en">English</a> | <a href="?language=polish">Polish</a>
+    </div>
+</section>
+<section>
     <div class="jumbotron">
         <div class="container">
             <h1>Canyon Bikes</h1>
