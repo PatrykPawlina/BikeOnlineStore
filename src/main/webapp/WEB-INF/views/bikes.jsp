@@ -29,7 +29,7 @@
                         <p>${bike.unitPrice} EUR</p>
                         <p>Available ${bike.unitsInStock} units in stock</p>
                         <p>
-                            <a href=" <spring:url value="/market/bike?id=${bike.bikeId}" /> "
+                            <a href=" <spring:url value="/market/bike?id=${bike.bikeId}"/>"
                                class="btn btn-primary">
                                 <span class="glyphicon-info-sign glyphicon"/></span> Details
                             </a>

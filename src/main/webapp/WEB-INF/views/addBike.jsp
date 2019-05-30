@@ -11,7 +11,7 @@
 <section>
     <div class="pull-right" style="padding-right: 50px">
         <a href="?language=en">English</a> | <a href="?language=polish">Polish</a>
-        <a href="<c:url value="/logout"/>">Logout</a>
+        <a href="<c:url value="/logout"/>">| Logout</a>
     </div>
 </section>
 <section>
@@ -24,6 +24,7 @@
 </section>
 <section class="container">
     <form:form method="POST" modelAttribute="newBike" class="form-horizontal" enctype="multipart/form-data">
+        <form:errors id="*" cssClass="alert alert-danger" element="div"/>
         <fieldset>
             <legend>Add new Bike</legend>
             <div class="form-group">
@@ -31,6 +32,7 @@
                     <spring:message code="addBike.form.bikeId.label"/></label>
                 <div class="col-lg-10">
                     <form:input id="bikeId" path="bikeId" type="text" class="form:input-large"/>
+                    <form:errors path="bikeId" cssClass="text-danger"/>
                 </div>
             </div>
             <div class="form-group">
@@ -38,6 +40,7 @@
                     <spring:message code="addBike.form.name.label"/> </label>
                 <div class="col-lg-10">
                     <form:input id="name" path="name" type="text" class="form:input-large"/>
+                    <form:errors path="name" cssClass="text-danger"/>
                 </div>
             </div>
             <div class="form-group">
@@ -45,6 +48,7 @@
                     <spring:message code="addBike.form.unitPrice.label"/> </label>
                 <div class="col-lg-10">
                     <form:input id="unitPrice" path="unitPrice" type="text" class="form:input-large"/>
+                    <form:errors path="unitPrice" cssClass="text-danger"/>
                 </div>
             </div>
             <div class="form-group">

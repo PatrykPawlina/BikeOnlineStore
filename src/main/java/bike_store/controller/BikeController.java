@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,11 @@ public class BikeController {
     }
 
     @RequestMapping(value = "/bikes/add", method = RequestMethod.POST)
-    public String processAddNewBikeForm(@ModelAttribute("newBike") Bike newBike, BindingResult result, HttpServletRequest request) {
+    public String processAddNewBikeForm(@ModelAttribute("newBike") @Valid Bike newBike, BindingResult result, HttpServletRequest request) {
+        if (result.hasErrors()) {
+            return "addBike";
+        }
+
         String[] suppressedFields = result.getSuppressedFields();
         if (suppressedFields.length > 0) {
             throw new RuntimeException("Attempting to bind disallowed fields: "
@@ -126,4 +131,6 @@ public class BikeController {
         modelAndView.setViewName("bikeNotFound");
         return modelAndView;
     }
+
+
 }

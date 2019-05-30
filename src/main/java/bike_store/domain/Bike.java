@@ -3,6 +3,7 @@ package bike_store.domain;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.*;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -11,9 +12,13 @@ import java.math.BigDecimal;
 public class Bike implements Serializable {
 
     private static final long serialVersionUID = 3678107792576131001L;
-
+    @Pattern(regexp = "P[1-9]+", message = "{Pattern.Bike.bikeId.validation}")
     private String bikeId;
+    @Size(min = 4, max = 50, message = "{Size.Bike.name.validation}")
     private String name;
+    @Min(value = 0, message = "{Min.Bike.unitPrice.validation}")
+    @Digits(integer = 8, fraction = 2, message = "{Digits.Bike.unitPrice.validation}")
+    @NotNull(message = "{NotNull.Bike.unitPrice.validation}")
     private BigDecimal unitPrice;
     private String description;
     private String manufacturer;
