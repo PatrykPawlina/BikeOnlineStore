@@ -5,6 +5,7 @@ import bike_store.domain.Customer;
 import bike_store.exception.BikeNotFoundException;
 import bike_store.exception.NoBikesFoundUnderCategoryException;
 import bike_store.service.BikeService;
+import bike_store.validator.BikeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,9 @@ public class BikeController {
 
     @Autowired
     private BikeService bikeService;
+
+    @Autowired
+    private BikeValidator bikeValidator;
 
     @RequestMapping("/bikes")
     public String list(Model model) {
@@ -109,6 +113,7 @@ public class BikeController {
 
     @InitBinder
     public void initialiseBinder(WebDataBinder binder) {
+        binder.setValidator(bikeValidator);
         binder.setAllowedFields(
                 "bikeId",
                 "name",
@@ -131,6 +136,4 @@ public class BikeController {
         modelAndView.setViewName("bikeNotFound");
         return modelAndView;
     }
-
-
 }

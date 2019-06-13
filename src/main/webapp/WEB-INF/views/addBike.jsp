@@ -24,7 +24,7 @@
 </section>
 <section class="container">
     <form:form method="POST" modelAttribute="newBike" class="form-horizontal" enctype="multipart/form-data">
-        <form:errors id="*" cssClass="alert alert-danger" element="div"/>
+        <form:errors path="*" cssClass="alert alert-danger" element="div"/>
         <fieldset>
             <legend>Add new Bike</legend>
             <div class="form-group">
