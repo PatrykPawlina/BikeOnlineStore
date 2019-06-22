@@ -26,7 +26,6 @@ import java.util.Map;
 @RequestMapping("market")
 public class BikeController {
 
-
     @Autowired
     private BikeService bikeService;
 

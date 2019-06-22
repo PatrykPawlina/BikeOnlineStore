@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartDto implements Serializable {
-
-    private static final long serialVersionUID = 2017182726290898588L;
-
+    private static final long serialVersionUID = -2017182726290898588L;
     private String id;
     private List<CartItemDto> cartItems;
 

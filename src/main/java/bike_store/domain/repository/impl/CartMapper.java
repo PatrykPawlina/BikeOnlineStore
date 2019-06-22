@@ -10,22 +10,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CartMapper implements RowMapper {
-
+public class CartMapper implements RowMapper<Cart> {
     private CartItemMapper cartItemMapper;
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public CartMapper(NamedParameterJdbcTemplate namedParameterJdbcTemplate, BikeService bikeService) {
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    public CartMapper(NamedParameterJdbcTemplate jdbcTemplate, BikeService bikeService) {
+        this.jdbcTemplate = jdbcTemplate;
         cartItemMapper = new CartItemMapper(bikeService);
     }
 
     @Override
-    public Cart mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-        String id = resultSet.getString("ID");
+    public Cart mapRow(ResultSet rs, int rowNum) throws SQLException {
+        String id = rs.getString("ID");
         Cart cart = new Cart(id);
-        String SQL = String.format("SELECT * FROM CART_ITEM WHERE CARD_ID = '$S'", id);
-        List<CartItem> cartItems = namedParameterJdbcTemplate.query(SQL, cartItemMapper);
+        String SQL = String.format("SELECT * FROM CART_ITEM WHERE CART_ID = '%s'", id);
+        List<CartItem> cartItems = jdbcTemplate.query(SQL, cartItemMapper);
         cart.setCartItems(cartItems);
         return cart;
     }

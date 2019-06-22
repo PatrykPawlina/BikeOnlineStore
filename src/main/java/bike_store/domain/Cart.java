@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class Cart implements Serializable {
-
     private static final long serialVersionUID = 6554623865768217431L;
-
     private String id;
     private List<CartItem> cartItems;
     private BigDecimal grandTotal;
@@ -22,6 +20,7 @@ public class Cart implements Serializable {
     }
 
     public BigDecimal getGrandTotal() {
+        updateGrandTotal();
         return grandTotal;
     }
 

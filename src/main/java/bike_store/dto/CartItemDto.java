@@ -3,8 +3,7 @@ package bike_store.dto;
 import java.io.Serializable;
 
 public class CartItemDto implements Serializable {
-    private static final long serialVersionUID = 3551573319376880896L;
-
+    private static final long serialVersionUID = -3551573319376880896L;
     private String id;
     private String bikeId;
     private int quantity;
@@ -21,7 +20,7 @@ public class CartItemDto implements Serializable {
         return bikeId;
     }
 
-    public void setBikeId(String productId) {
+    public void setBikeId(String bikeId) {
         this.bikeId = bikeId;
     }
 

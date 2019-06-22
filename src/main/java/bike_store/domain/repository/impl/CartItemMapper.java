@@ -7,8 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CartItemMapper implements RowMapper {
-
+public class CartItemMapper implements RowMapper<CartItem> {
     private BikeService bikeService;
 
     public CartItemMapper(BikeService bikeService) {
@@ -16,10 +15,10 @@ public class CartItemMapper implements RowMapper {
     }
 
     @Override
-    public Object mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-        CartItem cartItem = new CartItem(resultSet.getString("ID"));
-        cartItem.setBike(bikeService.getBikeById(resultSet.getString("BIKE_ID")));
-        cartItem.setQuantity(resultSet.getInt("QUANTITY"));
+    public CartItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+        CartItem cartItem = new CartItem(rs.getString("ID"));
+        cartItem.setBike(bikeService.getBikeById(rs.getString("BIKE_ID")));
+        cartItem.setQuantity(rs.getInt("QUANTITY"));
         return cartItem;
     }
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class CartItem implements Serializable {
-    private static final long serialVerdionUID = -4546941350577482213L;
+    private static final long serialVersionUID = -4546941350577482213L;
     private String id;
     private Bike bike;
     private int quantity;
@@ -48,9 +48,9 @@ public class CartItem implements Serializable {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int resuult = 1;
-        resuult = prime * resuult + ((id == null) ? 0 : id.hashCode());
-        return resuult;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
     }
 
     @Override

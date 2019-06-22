@@ -20,44 +20,37 @@ import java.util.Map;
 public class InMemoryCartRepository implements CartRepository {
 
     @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private NamedParameterJdbcTemplate jdbcTempleate;
 
     @Autowired
     private BikeService bikeService;
 
-    @Override
     public void create(CartDto cartDto) {
-        String INSERT_CART_SQL = "INSERT INTO CART(ID) VALUES(:id)";
-
+        String INSERT_CART_SQL = "INSERT INTO CART(ID) VALUES (:id)";
         Map<String, Object> cartParams = new HashMap<>();
         cartParams.put("id", cartDto.getId());
-
-        namedParameterJdbcTemplate.update(INSERT_CART_SQL, cartParams);
+        jdbcTempleate.update(INSERT_CART_SQL, cartParams);
         cartDto.getCartItems().stream().forEach(cartItemDto -> {
             Bike bikeById = bikeService.getBikeById(cartItemDto.getBikeId());
-            String INSERT_CART_ITEM_SQL = "INSERT INTO CART_ITEM(ID,PRODUCT_ID,CART_ID, QUANTITY)"
-                    + "VALUES (:id,:bike_id, :cart_id, :quantity)";
-
+            String INSERT_CART_ITEM_SQL = "INSERT INTO CART_ITEM(ID, BIKE_ID, CART_ID, QUANTITY) " +
+                    "VALUES (:id, :bike_id, :cart_id, :quantity)";
             Map<String, Object> cartItemsParams = new HashMap<>();
             cartItemsParams.put("id", cartItemDto.getId());
             cartItemsParams.put("bike_id", bikeById.getBikeId());
             cartItemsParams.put("cart_id", cartDto.getId());
-            cartItemsParams.put("quantity",
-                    cartItemDto.getQuantity());
-            namedParameterJdbcTemplate.update(INSERT_CART_ITEM_SQL,
-                    cartItemsParams);
+            cartItemsParams.put("quantity", cartItemDto.getQuantity());
+            jdbcTempleate.update(INSERT_CART_ITEM_SQL, cartItemsParams);
         });
     }
 
-    @Override
     public Cart read(String id) {
         String SQL = "SELECT * FROM CART WHERE ID = :id";
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
-        CartMapper cartMapper = new
-                CartMapper(namedParameterJdbcTemplate, bikeService);
+        CartMapper cartMapper = new CartMapper(jdbcTempleate, bikeService);
+
         try {
-            return (Cart) namedParameterJdbcTemplate.queryForObject(SQL, params, cartMapper);
+            return jdbcTempleate.queryForObject(SQL, params, cartMapper);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -65,17 +58,15 @@ public class InMemoryCartRepository implements CartRepository {
 
     @Override
     public void update(String id, CartDto cartDto) {
-        List<CartItemDto> cartItems =
-                cartDto.getCartItems();
+        List<CartItemDto> cartItems = cartDto.getCartItems();
         for (CartItemDto cartItem : cartItems) {
-            String SQL = "UPDATE CART_ITEM SET QUANTITY = :quantity, PRODUCT_ID = :productId WHERE ID " +
-                    "= :id AND CART_ID = :cartId";
+            String SQL = "UPDATE CART_ITEM SET QUANTITY = :quantity, BIKE_ID = :bikeId WHERE ID = :id AND CART_ID = :cartId";
             Map<String, Object> params = new HashMap<>();
             params.put("id", cartItem.getId());
             params.put("quantity", cartItem.getQuantity());
             params.put("bikeId", cartItem.getBikeId());
             params.put("cartId", id);
-            namedParameterJdbcTemplate.update(SQL, params);
+            jdbcTempleate.update(SQL, params);
         }
     }
 
@@ -85,8 +76,8 @@ public class InMemoryCartRepository implements CartRepository {
         String SQL_DELETE_CART = "DELETE FROM CART WHERE ID = :id";
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
-        namedParameterJdbcTemplate.update(SQL_DELETE_CART_ITEM, params);
-        namedParameterJdbcTemplate.update(SQL_DELETE_CART, params);
+        jdbcTempleate.update(SQL_DELETE_CART_ITEM, params);
+        jdbcTempleate.update(SQL_DELETE_CART, params);
     }
 
     @Override
@@ -104,29 +95,30 @@ public class InMemoryCartRepository implements CartRepository {
             create(newCartDto);
             return;
         }
+
         Map<String, Object> cartItemsParams = new HashMap<>();
         if (cart.getItemByBikeId(bikeId) == null) {
-            SQL = "INSERT INTO CART_ITEM (ID, PRODUCT_ID, CART_ID, QUANTITY) VALUES (:id,:productId, :cartId, :quantity)";
+            SQL = "INSERT INTO CART_ITEM (ID, BIKE_ID, CART_ID, QUANTITY) VALUES (:id, :bikeId, :cartId, :quantity)";
             cartItemsParams.put("id", cartId + bikeId);
             cartItemsParams.put("quantity", 1);
         } else {
-            SQL = "UPDATE CART_ITEM SET QUANTITY =:quantity WHERE CART_ID = :cartId AND PRODUCT_ID =:productId";
+            SQL = "UPDATE CART_ITEM SET QUANTITY = :quantity WHERE CART_ID = :cartId AND BIKE_ID = :bikeId";
             CartItem existingItem = cart.getItemByBikeId(bikeId);
             cartItemsParams.put("id", existingItem.getId());
             cartItemsParams.put("quantity", existingItem.getQuantity() + 1);
         }
         cartItemsParams.put("bikeId", bikeId);
         cartItemsParams.put("cartId", cartId);
-        namedParameterJdbcTemplate.update(SQL, cartItemsParams);
+        jdbcTempleate.update(SQL, cartItemsParams);
     }
 
     @Override
     public void removeItem(String cartId, String bikeId) {
-        String SQL_DELETE_CART_ITEM = "DELETE FROM CART_ITEM WHERE PRODUCT_ID = :productId AND CART_ID =:id";
+        String SQL_DELETE_CART_ITEM = "DELETE FROM CART_ITEM WHERE BIKE_ID = :bikeId AND CART_ID = :id";
         Map<String, Object> params = new HashMap<>();
         params.put("id", cartId);
-        params.put("productId", bikeId);
-        namedParameterJdbcTemplate.update(SQL_DELETE_CART_ITEM, params);
+        params.put("bikeId", bikeId);
+        jdbcTempleate.update(SQL_DELETE_CART_ITEM, params);
     }
 }
 
