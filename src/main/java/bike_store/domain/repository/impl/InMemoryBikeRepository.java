@@ -1,7 +1,6 @@
 package bike_store.domain.repository.impl;
 
 import bike_store.domain.Bike;
-import bike_store.domain.Customer;
 import bike_store.domain.repository.BikeRepository;
 import bike_store.exception.BikeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,17 +88,6 @@ public class InMemoryBikeRepository implements BikeRepository {
         params.put("inStock", bike.getUnitsInStock());
         params.put("inOrder", bike.getUnitsInOrder());
         params.put("discontinued", bike.isDiscontinued());
-        jdbcTemplate.update(SQL, params);
-    }
-
-    @Override
-    public void addCustomer(Customer customer) {
-        String SQL = "INSERT INTO CUSTOMERS ( " + "FIRSTNAME, " + "LASTNAME, " + "CUSTOMERGENDER) "
-                + "VALUES (:firstname, :lastname, :customergender)";
-        Map<String, Object> params = new HashMap<>();
-        params.put("lastName", customer.getFirstName());
-        params.put("lastName", customer.getLastName());
-        params.put("customerGender", customer.getCustomerGender());
         jdbcTemplate.update(SQL, params);
     }
 

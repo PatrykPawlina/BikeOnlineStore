@@ -1,7 +1,6 @@
 package bike_store.controller;
 
 import bike_store.domain.Bike;
-import bike_store.domain.Customer;
 import bike_store.exception.BikeNotFoundException;
 import bike_store.exception.NoBikesFoundUnderCategoryException;
 import bike_store.service.BikeService;
@@ -101,13 +100,6 @@ public class BikeController {
         }
         bikeService.addBike(newBike);
         return "redirect:/market/bikes";
-    }
-
-    @RequestMapping(value = "/customers/add", method = RequestMethod.GET)
-    public String getAddNewCustomerForm(Model model) {
-        Customer newCustomer = new Customer();
-        model.addAttribute("newCustomer", newCustomer);
-        return "addCustomer";
     }
 
     @InitBinder

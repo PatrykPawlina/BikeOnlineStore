@@ -16,12 +16,12 @@ public class RootApplicationContextConfig {
     @Bean
     public DataSource dataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        EmbeddedDatabase db = builder
+        EmbeddedDatabase database = builder
                 .setType(EmbeddedDatabaseType.HSQL)
                 .addScript("db/sql/create-table.sql")
                 .addScript("db/sql/insert-data.sql")
                 .build();
-        return db;
+        return database;
     }
 
     @Bean

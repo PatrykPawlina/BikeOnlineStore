@@ -11,9 +11,9 @@ public class HomeController {
     @RequestMapping
     public String welcome(Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("greeting", "Welcome to the Canyon Bike's Online Store!!!");
-        model.addAttribute("tagline", "Best place where you buy a amazing bike:)");
+        model.addAttribute("tagline", "Best Store in the World, where you buy a amazing bike:)");
         redirectAttributes.addFlashAttribute("greeting", "Welcome to the Canyon Bike's Online Store!!!");
-        redirectAttributes.addFlashAttribute("tagline", "Best place where you buy a amazing bike:)");
+        redirectAttributes.addFlashAttribute("tagline", "Best Store in the World, where you buy a amazing bike:)");
         return "redirect:/welcome/greeting";
     }
 

@@ -1,51 +1,82 @@
 package bike_store.domain;
 
-public class Customer {
+import java.io.Serializable;
 
-    private String firstName;
-    private String lastName;
-    private CustomerGender customerGender;
-    private String emailAddress;
+public class Customer implements Serializable {
+    private static final long serialVersionUID = 2284040482222162898L;
+    private Long customerId;
+    private String name;
+    private Address billingAddress;
+    private String phoneNumber;
 
     public Customer() {
+        super();
+        this.billingAddress = new Address();
     }
 
-    public Customer(String firsName, String lastName, CustomerGender customerGender, String emailAddress) {
-        this.firstName = firsName;
-        this.lastName = lastName;
-        this.customerGender = customerGender;
-        this.emailAddress = emailAddress;
+    public Customer(Long customerId, String name) {
+        this();
+        this.customerId = customerId;
+        this.name = name;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public static long getSerialversionuid() {
+        return serialVersionUID;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public String getLastName() {
-        return lastName;
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public String getName() {
+        return name;
     }
 
-    public CustomerGender getCustomerGender() {
-        return customerGender;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setCustomerGender(CustomerGender customerGender) {
-        this.customerGender = customerGender;
+    public Address getBillingAddress() {
+        return billingAddress;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((customerId == null) ? 0 :
+                customerId.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Customer other = (Customer) obj;
+        if (customerId == null) {
+            return other.customerId == null;
+        } else return customerId.equals(other.customerId);
     }
 }
+

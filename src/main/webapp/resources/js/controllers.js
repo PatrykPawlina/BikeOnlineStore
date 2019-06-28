@@ -14,7 +14,6 @@ cartApp.controller("cartCtrl", function ($scope, $http) {
             .success(function (data) {
                 $scope.refreshCart($scope.cartId);
             });
-
     };
 
     $scope.initCartId = function (cartId) {

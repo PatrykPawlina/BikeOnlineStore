@@ -3,6 +3,7 @@ package bike_store.service.impl;
 import bike_store.domain.Cart;
 import bike_store.domain.repository.CartRepository;
 import bike_store.dto.CartDto;
+import bike_store.exception.InvalidCartException;
 import bike_store.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,19 @@ public class CartServiceImpl implements CartService {
     public void removeItem(String cartId, String
             bikeId) {
         cartRepository.removeItem(cartId, bikeId);
+    }
+
+    @Override
+    public Cart validate(String cartId) {
+        Cart cart = cartRepository.read(cartId);
+        if (cart == null || cart.getCartItems().size() == 0) {
+            throw new InvalidCartException(cartId);
+        }
+        return cart;
+    }
+
+    @Override
+    public void clearCart(String cartId) {
+        cartRepository.clearCart(cartId);
     }
 }

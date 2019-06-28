@@ -1,7 +1,6 @@
 package bike_store.service.impl;
 
 import bike_store.domain.Bike;
-import bike_store.domain.Customer;
 import bike_store.domain.repository.BikeRepository;
 import bike_store.service.BikeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +46,6 @@ public class BikeServiceImpl implements BikeService {
     @Override
     public void addBike(Bike bike) {
         bikeRepository.addBike(bike);
-    }
-
-    @Override
-    public void addCustomer(Customer customer) {
-        bikeRepository.addCustomer(customer);
     }
 }
 
